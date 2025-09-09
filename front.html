@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Advanced Image Gallery</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Animated Gradient Background */
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body.animated-bg {
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1f1c2c);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      color: #e6edf3;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Welcome Screen */
+    #welcome {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1f1c2c);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 3000;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    /* Typewriter Effect */
+    #welcome h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #fff;
+      width: 0;
+      animation: typing 3s steps(40, end) forwards, blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    /* Section Title */
+    h2 {
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+
+    /* Gallery Items */
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      object-fit: cover;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    .gallery img:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 25px rgba(0,255,200,0.7), 0 0 50px rgba(0,128,255,0.5);
+    }
+
+    /* Filter Buttons */
+    .filter-btn {
+      border-radius: 25px;
+      padding: 8px 20px;
+      margin: 5px;
+      border: none;
+      transition: all 0.3s ease;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      color: white !important;
+      box-shadow: 0 4px 20px rgba(0, 200, 255, 0.6);
+    }
+
+    /* Modal with Glassmorphism */
+    .modal-content {
+      background: rgba(20,20,20,0.75);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .carousel-item img {
+      border-radius: 15px;
+      width: 100%;
+      max-height: 600px;
+      object-fit: cover;
+      animation: fadeZoom 1.2s ease;
+    }
+
+    @keyframes fadeZoom {
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body class="animated-bg">
+
+<!-- Welcome Screen -->
+<div id="welcome">
+  <h1>👋 Welcome to the Advanced Gallery... Enjoy!</h1>
+</div>
+
+<!-- Main Content -->
+<main id="mainContent" class="container py-5" style="display:none;">
+  <h2>🚀 Explore the Gallery</h2>
+  <p class="text-center text-light mb-4">
+    Responsive, interactive gallery with category filters, lightbox view, and smooth animations.
+  </p>
+
+  <!-- Filter Buttons -->
+  <div class="text-center mb-4">
+    <button class="btn btn-outline-light filter-btn active" data-filter="all">All</button>
+    <button class="btn btn-outline-light filter-btn" data-filter="nature">Nature</button>
+    <button class="btn btn-outline-light filter-btn" data-filter="wildlife">Wildlife</button>
+    <button class="btn btn-outline-light filter-btn" data-filter="architecture">Architecture</button>
+    <button class="btn btn-outline-light filter-btn" data-filter="sunset">Sunset</button>
+  </div>
+
+  <!-- Responsive Grid Gallery -->
+  <div class="row gallery g-4">
+    <!-- (Images remain the same as in previous version: 12 total) -->
+    <div class="col-md-4 col-sm-6 filter-item nature">
+      <img src="https://picsum.photos/id/1015/600/400" alt="Mountain River" data-bs-target="#lightboxCarousel" data-bs-slide-to="0">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item nature">
+      <img src="https://picsum.photos/id/1035/600/400" alt="Ocean View" data-bs-target="#lightboxCarousel" data-bs-slide-to="1">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item nature">
+      <img src="https://picsum.photos/id/1074/600/400" alt="Forest Path" data-bs-target="#lightboxCarousel" data-bs-slide-to="2">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item nature">
+      <img src="https://picsum.photos/id/1021/600/400" alt="Waterfall" data-bs-target="#lightboxCarousel" data-bs-slide-to="3">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item nature">
+      <img src="https://picsum.photos/id/1022/600/400" alt="Green Hills" data-bs-target="#lightboxCarousel" data-bs-slide-to="4">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item nature">
+      <img src="https://picsum.photos/id/1024/600/400" alt="Lake View" data-bs-target="#lightboxCarousel" data-bs-slide-to="5">
+    </div>
+
+    <!-- Wildlife -->
+    <div class="col-md-4 col-sm-6 filter-item wildlife">
+      <img src="https://picsum.photos/id/1025/600/400" alt="Wildlife Image" data-bs-target="#lightboxCarousel" data-bs-slide-to="6">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item wildlife">
+      <img src="https://picsum.photos/id/237/600/400" alt="Dog Portrait" data-bs-target="#lightboxCarousel" data-bs-slide-to="7">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item wildlife">
+      <img src="https://picsum.photos/id/433/600/400" alt="Bird" data-bs-target="#lightboxCarousel" data-bs-slide-to="8">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item wildlife">
+      <img src="https://picsum.photos/id/1076/600/400" alt="Tiger" data-bs-target="#lightboxCarousel" data-bs-slide-to="9">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item wildlife">
+      <img src="https://picsum.photos/id/219/600/400" alt="Horse" data-bs-target="#lightboxCarousel" data-bs-slide-to="10">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item wildlife">
+      <img src="https://picsum.photos/id/593/600/400" alt="Elephant" data-bs-target="#lightboxCarousel" data-bs-slide-to="11">
+    </div>
+
+    <!-- Architecture -->
+    <div class="col-md-4 col-sm-6 filter-item architecture">
+      <img src="https://picsum.photos/id/1045/600/400" alt="Historic Monument" data-bs-target="#lightboxCarousel" data-bs-slide-to="12">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item architecture">
+      <img src="https://picsum.photos/id/1055/600/400" alt="Modern Architecture" data-bs-target="#lightboxCarousel" data-bs-slide-to="13">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item architecture">
+      <img src="https://picsum.photos/id/1080/600/400" alt="Bridge Design" data-bs-target="#lightboxCarousel" data-bs-slide-to="14">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item architecture">
+      <img src="https://picsum.photos/id/1084/600/400" alt="City Skyline" data-bs-target="#lightboxCarousel" data-bs-slide-to="15">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item architecture">
+      <img src="https://picsum.photos/id/1081/600/400" alt="Futuristic Tower" data-bs-target="#lightboxCarousel" data-bs-slide-to="17">
+    </div>
+
+    <!-- Sunset -->
+    <div class="col-md-4 col-sm-6 filter-item sunset">
+      <img src="https://picsum.photos/id/1065/600/400" alt="Sunset View" data-bs-target="#lightboxCarousel" data-bs-slide-to="18">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item sunset">
+      <img src="https://picsum.photos/id/1070/600/400" alt="Beach Sunset" data-bs-target="#lightboxCarousel" data-bs-slide-to="19">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item sunset">
+      <img src="https://picsum.photos/id/109/600/400" alt="Desert Sunset" data-bs-target="#lightboxCarousel" data-bs-slide-to="20">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item sunset">
+      <img src="https://picsum.photos/id/110/600/400" alt="Valley Sunset" data-bs-target="#lightboxCarousel" data-bs-slide-to="21">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item sunset">
+      <img src="https://picsum.photos/id/111/600/400" alt="Golden Hour" data-bs-target="#lightboxCarousel" data-bs-slide-to="22">
+    </div>
+    <div class="col-md-4 col-sm-6 filter-item sunset">
+      <img src="https://picsum.photos/id/112/600/400" alt="Sunset Horizon" data-bs-target="#lightboxCarousel" data-bs-slide-to="23">
+    </div>
+  </div>
+</main>
+
+<!-- Modal Slideshow -->
+<div class="modal fade" id="lightboxModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div id="lightboxCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner"></div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#lightboxCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Welcome Animation
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.getElementById("welcome").style.opacity = "0";
+      document.getElementById("welcome").style.visibility = "hidden";
+      document.getElementById("mainContent").style.display = "block";
+    }, 4000); // wait until typing finishes
+  });
+
+  // Build modal slides dynamically
+  const galleryImages = document.querySelectorAll('.gallery img');
+  const carouselInner = document.querySelector('#lightboxCarousel .carousel-inner');
+
+  galleryImages.forEach((img, index) => {
+    const slide = document.createElement('div');
+    slide.classList.add('carousel-item');
+    if (index === 0) slide.classList.add('active');
+    slide.innerHTML = `
+      <img src="${img.src.replace('/600/400','/1200/700')}" alt="${img.alt}">
+      <div class="carousel-caption">${img.alt}</div>
+    `;
+    carouselInner.appendChild(slide);
+
+    img.addEventListener('click', () => {
+      const carousel = new bootstrap.Carousel(document.getElementById('lightboxCarousel'));
+      carousel.to(index);
+      new bootstrap.Modal(document.getElementById('lightboxModal')).show();
+    });
+  });
+
+  // Filter Buttons
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('.filter-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+
+      items.forEach(item => {
+        item.style.display = (filter === 'all' || item.classList.contains(filter)) ? 'block' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
